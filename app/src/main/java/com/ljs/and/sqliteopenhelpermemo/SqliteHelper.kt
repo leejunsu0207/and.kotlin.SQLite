@@ -1,16 +1,16 @@
 package com.ljs.and.sqliteopenhelpermemo
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelper(context, name, null, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-
-        val create = "create table memo(" +
+        Log.d("SQLiteHelper", "db")
+        val create = "create table memo (" +
                 "no integer primary key, " +
                 "content text, " +
                 "datetime integer" +
@@ -31,7 +31,7 @@ class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelp
         values.put("datetime", memo.datetime)
     }
 
-    @SuppressLint("Range")
+
     fun selectMemo(): MutableList<Memo>{
         val list = mutableListOf<Memo>()
 
@@ -41,9 +41,18 @@ class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelp
 
         while(cursor.moveToNext()){
 
-            val no = cursor.getLong(cursor.getColumnIndex("no"))
-            val content = cursor.getString(cursor.getColumnIndex("content"))
-            val datetime = cursor.getLong(cursor.getColumnIndex("datetime"))
+            val noIdx = cursor.getColumnIndex("no")
+            val no = cursor.getLong(noIdx)
+
+            val contentIdx = cursor.getColumnIndex("content")
+            val content = cursor.getString(contentIdx)
+
+            val datetimeIdx = cursor.getColumnIndex("datetime")
+            val datetime = cursor.getLong(datetimeIdx)
+
+            Log.d("SQLiteHelper", no.toString())
+            Log.d("SQLiteHelper", content.toString())
+            Log.d("SQLiteHelper", datetime.toString())
             list.add(Memo(no, content, datetime))
         }
         cursor.close()
@@ -74,4 +83,3 @@ class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelp
 }
 
 data class Memo(var no:Long?, var content: String, var datetime: Long)
-
