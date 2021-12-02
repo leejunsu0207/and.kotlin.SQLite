@@ -21,14 +21,16 @@ class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelp
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-
-
     }
 
     fun insertMemo(memo: Memo){
         val values = ContentValues()
         values.put("content", memo.content)
         values.put("datetime", memo.datetime)
+
+        val wd = writableDatabase
+        wd.insert("memo", null, values)
+        wd.close()
     }
 
 
