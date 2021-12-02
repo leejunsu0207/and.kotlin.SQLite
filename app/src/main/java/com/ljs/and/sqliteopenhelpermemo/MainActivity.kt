@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val adapter = RecyclerAdapter()
+        adapter.helper = helper
 
         adapter.listData.addAll(helper.selectMemo())
         binding.recyclerMemo.adapter = adapter
