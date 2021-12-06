@@ -33,7 +33,7 @@ class SqliteHelper(context: Context, name: String, version: Int): SQLiteOpenHelp
         wd.close()
     }
 
-
+// 리젝티드 세마포 익스큐션
     fun selectMemo(): MutableList<Memo>{
         val list = mutableListOf<Memo>()
 
